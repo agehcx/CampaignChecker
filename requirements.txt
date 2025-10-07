@@ -1,0 +1,4 @@
+playwright
+httpx
+python-dotenv
+beautifulsoup4
