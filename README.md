@@ -151,6 +151,8 @@ Want to run this automatically at 11pm, 3am, 7am, 11am, 3pm, and 7pm (UTC)? The 
 
 The monitor will now run automatically at the scheduled six times each day and notify you when campaigns are found!
 
+The workflow caches `campaign_state.json` between runs so reminders stay in sync. If you prefer to reset reminders on every run, remove the cache step from `.github/workflows/monitor.yml` or delete the `campaign-state-*` caches from the workflow settings.
+
 ---
 
 ## 📁 Project Structure
