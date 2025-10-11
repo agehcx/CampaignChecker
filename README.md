@@ -13,7 +13,7 @@ Never miss out on Binance Thailand campaigns again! This bot automatically check
 - 📊 **Detailed Information** - Extracts campaign title, description, and countdown timer
 - 🤖 **Headless Browser** - Uses Playwright for reliable scraping of dynamic content
 - ⏰ **GitHub Actions Support** - Can run automatically on a schedule (optional)
-- 🌐 **LINE Notify Support** - Optional LINE notifications alongside Telegram
+- 🔔 **Smart Reminders** - Automatic reminders at 1 hour, 15 minutes, 5 minutes, and 1 minute before start
 
 ---
 
@@ -105,7 +105,9 @@ When a campaign is found, you'll receive a Telegram message like:
 |----------|-------------|----------|
 | `TELEGRAM_BOT_TOKEN` | Your Telegram bot token from BotFather | Yes |
 | `TELEGRAM_CHAT_ID` | Your Telegram chat/channel ID | Yes |
-| `LINE_NOTIFY_TOKEN` | LINE Notify token (optional) | No |
+| `CAMPAIGN_STATE_PATH` | Path to store campaign state JSON (optional) | No |
+
+The state file keeps track of which campaigns have already triggered the initial alert and each reminder threshold (1h/15m/5m/1m). When running locally you can keep it for persistent reminders. When running on GitHub Actions the workspace is ephemeral, so reminders still work because the monitor evaluates the countdown on every run, but the state file is recreated each time.
 
 ### Customization
 
@@ -117,13 +119,21 @@ SEARCH_TEXT = "เร็วๆ นี้"
 
 # Change the target URL
 URL = "https://www.binance.th/th/campaign/list"
+
+# Adjust reminder schedule (label, time delta)
+REMINDER_THRESHOLDS = (
+   ("1m", timedelta(minutes=1)),
+   ("5m", timedelta(minutes=5)),
+   ("15m", timedelta(minutes=15)),
+   ("1h", timedelta(hours=1)),
+)
 ```
 
 ---
 
 ## 🤖 Automated Monitoring (GitHub Actions)
 
-Want to run this automatically every hour? The repository includes a GitHub Actions workflow:
+Want to run this automatically at 11pm, 3am, 7am, 11am, 3pm, and 7pm (UTC)? The repository includes a GitHub Actions workflow:
 
 ### Setup:
 
@@ -139,7 +149,7 @@ Want to run this automatically every hour? The repository includes a GitHub Acti
    - Go to `Actions` tab
    - Enable workflows
 
-The monitor will now run automatically every hour and notify you when campaigns are found!
+The monitor will now run automatically at the scheduled six times each day and notify you when campaigns are found!
 
 ---
 
@@ -204,7 +214,6 @@ print(html[:1000])  # Print first 1000 characters
 Comment out the notification calls:
 ```python
 # await notify_telegram(msg)
-# await notify_line(msg)
 ```
 
 ---

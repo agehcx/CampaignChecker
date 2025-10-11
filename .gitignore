@@ -58,6 +58,7 @@ wallet_balances.log
 *.txt.backup
 temp/
 tmp/
+campaign_state.json
 
 # Testing
 .pytest_cache/

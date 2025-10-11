@@ -85,14 +85,3 @@ curl -X POST "https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage" \
   -H "Content-Type: application/json" \
   -d '{"chat_id": "<YOUR_CHAT_ID>", "text": "Test message"}'
 ```
-
-## Optional: LINE Notify Setup
-
-1. Visit https://notify-bot.line.me/
-2. Login with your LINE account
-3. Click "Generate token"
-4. Select a chat room to receive notifications
-5. Copy the token and add to your `.env`:
-   ```
-   LINE_NOTIFY_TOKEN=your_line_notify_token_here
-   ```

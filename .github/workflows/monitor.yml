@@ -2,7 +2,7 @@ name: Monitor Binance TH Campaign
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 23,3,7,11,15,19 * * *"
   workflow_dispatch:
 
 jobs:
@@ -19,5 +19,4 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
         run: python monitor_binance_th.py
