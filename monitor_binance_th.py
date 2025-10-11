@@ -8,6 +8,7 @@ from typing import Dict, List, Optional, Tuple
 
 import httpx
 from bs4 import BeautifulSoup
+from playwright.async_api import TimeoutError as PlaywrightTimeoutError
 from playwright.async_api import async_playwright
 
 # Try to load .env file if it exists
@@ -342,7 +343,7 @@ async def fetch_html_with_playwright() -> str:
         await page.route("**/*", lambda route: route.continue_())
         await page.goto(URL, wait_until="networkidle", timeout=90_000)
         await asyncio.sleep(2)
-        with suppress_timeout():
+        async with suppress_timeout():
             await page.wait_for_selector(f"button:has-text(\"{SEARCH_TEXT}\")", timeout=3_000)
         html = await page.content()
         await context.close()
@@ -357,9 +358,7 @@ class suppress_timeout:
         return self
 
     async def __aexit__(self, exc_type, exc, _):
-        from playwright._impl._api_types import TimeoutError
-
-        return exc_type is not None and issubclass(exc_type, TimeoutError)
+        return exc_type is not None and issubclass(exc_type, PlaywrightTimeoutError)
 
 
 async def notify_telegram(text: str) -> bool:
@@ -413,7 +412,19 @@ async def main() -> None:
 
             notifications = await process_campaign_notifications(campaigns, fetched_at)
             if not any(notifications.values()):
-                print("\nℹ️ Campaigns already notified. No new messages sent this run.\n")
+                print("\nℹ️ Campaigns already notified. Sending status heartbeat.\n")
+                sections = [format_campaign_section(c) for c in campaigns]
+                heartbeat_msg = "\n".join(
+                    [
+                        "ℹ️ **Binance TH Campaign Monitor**",
+                        "",
+                        "The following campaigns are still upcoming (already alerted before):",
+                        "",
+                    ]
+                    + sections
+                    + ["", "━━━━━━━━━━━━━━━━━━━", f"🔗 {URL}"]
+                )
+                await notify_telegram(heartbeat_msg)
         else:
             print(f"ℹ️  No campaign found with '{SEARCH_TEXT}'")
 

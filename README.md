@@ -13,7 +13,7 @@ Never miss out on Binance Thailand campaigns again! This bot automatically check
 - 📊 **Detailed Information** - Extracts campaign title, description, and countdown timer
 - 🤖 **Headless Browser** - Uses Playwright for reliable scraping of dynamic content
 - ⏰ **GitHub Actions Support** - Can run automatically on a schedule (optional)
-- 🔔 **Smart Reminders** - Automatic reminders at 1 hour, 15 minutes, 5 minutes, and 1 minute before start
+- 🔔 **Smart Reminders** - Automatic reminders at 1 hour, 15 minutes, 5 minutes, and 1 minute before start (plus heartbeat updates while campaigns remain pending)
 
 ---
 
