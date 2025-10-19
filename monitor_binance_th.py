@@ -417,10 +417,12 @@ async def main() -> None:
                 heartbeat_msg = "\n".join(
                     [
                         "ℹ️ Binance TH - Campaign Monitor",
+                        "",
                         "No campaigns found ‼️",
+                        "",
                     ]
                     + sections
-                    + ["", ""]
+                    + ["", f"🔗 {URL}"]
                 )
                 await notify_telegram(heartbeat_msg)
         else:
