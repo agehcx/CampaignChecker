@@ -281,7 +281,7 @@ async def process_campaign_notifications(
             "",
         ]
         sections = [format_campaign_section(c) for c in new_campaigns]
-        message = "\n".join(header + sections + ["", "━━━━━━━━━━━━━━━━━━━", f"🔗 {URL}"])
+        message = "\n".join(header + sections + ["━━━━━━━━━━━━━━━━━━━", f"🔗 {URL}"])
 
         if await notify_telegram(message):
             notifications_sent["initial"] = True
