@@ -414,12 +414,17 @@ async def main() -> None:
             if not any(notifications.values()):
                 print("\nℹ️ Campaigns already notified. Sending status heartbeat.\n")
                 sections = [format_campaign_section(c) for c in campaigns]
+
+                if campaigns:
+                    header_line = f"{len(campaigns)} Campaign{'s' if len(campaigns) != 1 else ''} found ✅"
+                else:
+                    header_line = "No campaigns found ‼️"
+
                 heartbeat_msg = "\n".join(
                     [
                         # "ℹ️ Binance TH - Campaign Monitor",
                         # "",
-                        "No campaigns found ‼️",
-                        "",
+                        header_line,
                     ]
                     + sections
                     + ["", f"🔗 {URL}"]
