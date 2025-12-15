@@ -273,8 +273,8 @@ async def process_campaign_notifications(
     if new_campaigns:
         ts_local = fetched_at.astimezone().strftime("%Y-%m-%d %H:%M:%S %Z")
         header = [
-            "🚨 Binance TH - Campaign Monitor",
-            "",
+            # "🚨 Binance TH - Campaign Monitor",
+            # "",
             "✅ Status: FOUND",
             f"⏰ Time: {ts_local}",
             f"📊 Found {len(new_campaigns)} new campaign(s)",
@@ -416,8 +416,8 @@ async def main() -> None:
                 sections = [format_campaign_section(c) for c in campaigns]
                 heartbeat_msg = "\n".join(
                     [
-                        "ℹ️ Binance TH - Campaign Monitor",
-                        "",
+                        # "ℹ️ Binance TH - Campaign Monitor",
+                        # "",
                         "No campaigns found ‼️",
                         "",
                     ]
